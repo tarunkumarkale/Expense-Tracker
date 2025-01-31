@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ExpenseList from './Components/ExpeneseList';
-
 
 const App = () => {
   const [totalBalance, setTotalBalance] = useState(10000);
@@ -9,6 +8,21 @@ const App = () => {
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('Food');
   const [expenses, setExpenses] = useState([]); // Array of expense objects
+
+  // Load expenses from localStorage when the app mounts
+  useEffect(() => {
+    const storedExpenses = localStorage.getItem('expenses');
+    if (storedExpenses) {
+      setExpenses(JSON.parse(storedExpenses)); // Parse and set stored expenses
+    }
+  }, []);
+
+  // Save expenses to localStorage whenever expenses array changes
+  useEffect(() => {
+    if (expenses.length > 0) {
+      localStorage.setItem('expenses', JSON.stringify(expenses)); // Store updated expenses in localStorage
+    }
+  }, [expenses]);
 
   const handleAddExpense = () => {
     // Create an expense object and push it to the expenses array
