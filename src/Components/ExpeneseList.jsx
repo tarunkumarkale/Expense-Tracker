@@ -1,15 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function ExpenseList() {
-  const [expenses, setExpenses] = useState([
-    { description: 'Bought Vegetables', amount: 200, category: 'Food' },
-    { description: 'Monthly Rent', amount: -1500, category: 'Rent' },
-    { description: 'Electricity Bill', amount: 1000, category: 'Other' },
-  ]);
-
+const ExpenseList = ({ expenses, setExpenses }) => {
   const handleDelete = (index) => {
     const updatedExpenses = expenses.filter((_, i) => i !== index);
-    setExpenses(updatedExpenses);
+    setExpenses(updatedExpenses); // Remove the expense from the list
   };
 
   return (
@@ -35,7 +29,7 @@ function ExpenseList() {
                 <td className="px-4 py-2 border-b text-[10px] sm:text-sm">{expense.category}</td>
                 <td className="px-4 py-2 border-b text-[10px] sm:text-sm">
                   <button
-                    onClick={() => handleDelete(index)}
+                    onClick={() => handleDelete(index)} // Delete button functionality
                     className="text-red-500 hover:text-red-700"
                   >
                     ❌
@@ -48,6 +42,6 @@ function ExpenseList() {
       </div>
     </div>
   );
-}
+};
 
 export default ExpenseList;

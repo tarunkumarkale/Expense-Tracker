@@ -1,99 +1,95 @@
-import React, { useState } from "react";
-import ExpenseList from "./Components/ExpeneseList";
+import React, { useState } from 'react';
+import ExpenseList from './Components/ExpeneseList';
+
 
 const App = () => {
+  const [totalBalance, setTotalBalance] = useState(10000);
+  const [totalRemainingBalance, setTotalRemainingBalance] = useState(10000);
+  const [description, setDescription] = useState('');
+  const [amount, setAmount] = useState('');
+  const [category, setCategory] = useState('Food');
+  const [expenses, setExpenses] = useState([]); // Array of expense objects
 
- const [totalBalance,settotalBalnce]=useState(10000)
- const [totalRemaingBalance,setTotalRemaingBalance]=useState(10000)
-const [description,setdescription]=useState('')
-const [amount,setamount]=useState()
+  const handleAddExpense = () => {
+    // Create an expense object and push it to the expenses array
+    const newExpense = { description, amount: parseFloat(amount), category };
+    setExpenses([...expenses, newExpense]);
 
-const Inpdescription=(e)=>{
+    // Optionally, update the total remaining balance after adding the expense
+    setTotalRemainingBalance(totalRemainingBalance - newExpense.amount);
 
-
- setdescription(e.target.value)
-}
-
-const PaidAmount=(e)=>{
-setamount(e.target.value)
-}
-console.log(description)
+    // Reset input fields
+    setDescription('');
+    setAmount('');
+    setCategory('Food');
+  };
 
   return (
     <div className="max-w-[1300px] bg-slate-200 mx-auto text-center mt-5">
-      {/* /////////////////////////////////////////     total baalnce // remaing balance                            ///////////////////////////////////////////// */}
-      <div className="grid  gap-4  sm:grid-cols-2  grid-rows-2">
+      {/* Total Balance and Remaining Balance */}
+      <div className="grid gap-4 sm:grid-cols-2 grid-rows-2">
         <div>
-          <h2 className="text-lg font-semibold text-red-500">🏦 Total Balace</h2>
+          <h2 className="text-lg font-semibold text-red-500">🏦 Total Balance</h2>
           <p className="text-2xl font-bold mt-2 text-gray-900">₹{totalBalance}</p>
         </div>
         <div>
-        
           <h2 className="text-lg font-semibold text-red-500">💰 Remaining Balance</h2>
-          <p className="text-2xl font-bold mt-2 text-gray-900">₹{totalRemaingBalance}</p>
+          <p className="text-2xl font-bold mt-2 text-gray-900">₹{totalRemainingBalance}</p>
         </div>
       </div>
-      {/* ///////////////////////////////////////////////////////////////////////// */}
 
-
-
-      {/*////////////////////////////////////////////   here input filed  start  /////////////////////////////////////////*/}
-      <div className="grid  gap-4  sm:grid-cols-2  grid-rows-2">
+      {/* Input Form */}
+      <div className="grid gap-4 sm:grid-cols-2 grid-rows-2">
         <div className="mx-[10%]">
           <input
             type="text"
             className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter description (e.g., Grocery, Rent, Salary)"
-             value={description}  onChange={Inpdescription}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
 
         <div className="mx-[10%]">
-  
           <input
             type="number"
             className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter amount (e.g., 500, -200)"
-            value={amount}  onChange={PaidAmount}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
           />
         </div>
       </div>
-         
-         
-         {/* ////////////////////////drop down     and    sumbit   */}
-         <div className="grid  gap-4  sm:grid-cols-2  grid-rows-2">
+
+      {/* Dropdown and Submit */}
+      <div className="grid gap-4 sm:grid-cols-2 grid-rows-2">
         <div className="mx-[10%]">
-        <select
-  className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500">
-  <option value="Food">Food</option>
-  <option value="Travel">Travel</option>
-  <option value="Shopping">Shopping</option>
-  <option value="Rent">Rent</option>
-  <option value="Other">Other</option>
-</select>
+          <select
+            className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="Food">Food</option>
+            <option value="Travel">Travel</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Rent">Rent</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
 
         <div className="mx-auto">
-     
-        <button
-  type="button"
-  className="w-full p-3  bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-// assuming you have handleSubmit defined
->
-  Add Expense
-</button>
+          <button
+            type="button"
+            className="w-full p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onClick={handleAddExpense} // Add expense on button click
+          >
+            Add Expense
+          </button>
         </div>
-
       </div>
 
-<ExpenseList/>
-
-
-
-
-
-
-
+      {/* Expense List */}
+      <ExpenseList expenses={expenses} setExpenses={setExpenses} />
     </div>
   );
 };
