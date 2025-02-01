@@ -39,7 +39,7 @@ const App = () => {
   };
 
   return (
-    <div className="max-w-[1300px] bg-slate-200 mx-auto text-center mt-5">
+    <div className="max-w-[1300px]  mx-auto text-center mt-5">
       {/* Total Balance and Remaining Balance */}
       <div className="grid gap-4 sm:grid-cols-2 grid-rows-2">
         <div>
@@ -77,7 +77,7 @@ const App = () => {
 
       {/* Dropdown and Submit */}
       <div className="grid gap-4 sm:grid-cols-2 grid-rows-2">
-        <div className="mx-[10%]">
+        <div className="mx-[10%]  mt-3 sm:mt-0 ">
           <select
             className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={category}
